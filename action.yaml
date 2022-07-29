@@ -15,14 +15,10 @@ runs:
     # Setting up ruby on the machine
     - name: Set up Ruby
       id: set_up_ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: "2.7"
-    # Generate cache key
-    - name: Generate cache key
-      id: generate_cache_key
-      shell: bash
-      run: bash ./checksum.sh checksum.txt
+        bundler-cache: true
     # Installing firebase on the machine
     - name: Install firebase tool
       id: install_firebase_tool
@@ -58,10 +54,7 @@ runs:
           ~/.gradle/caches/modules-*
           ~/.gradle/caches/jars-*
           ~/.gradle/caches/build-cache-*
-        key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
-    # install ruby dependencies
-    - name: Install dependencies to support ruby project
-      shell: bash
-      run: |
-        bundle config --global set deploy_platform_default x86_64-linux
-        bundle install
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
