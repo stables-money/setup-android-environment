@@ -43,6 +43,7 @@ runs:
     # Installing bundler to use fastlane on the machine
     - name: Setup fastlane
       id: set_up_fastlane
+      shell: bash
       run: |
         gem install bundler:1.17.2
         bundle config path vendor/bundle
