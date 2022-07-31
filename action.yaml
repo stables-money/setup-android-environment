@@ -19,13 +19,6 @@ runs:
       with:
         ruby-version: "2.7"
         bundler-cache: true
-    # Installing firebase on the machine
-    - name: Install firebase tool
-      id: install_firebase_tool
-      shell: bash
-      run: |
-        yarn global add firebase-tools
-        echo "::add-path::$(yarn global bin)"
     # Gem caching
     - name: Gem caching
       id: gem_cache
@@ -58,3 +51,7 @@ runs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
             ${{ runner.os }}-gradle-
+    # gradlew permission grant
+    - name: Grant Permission to Execute
+      shell: bash
+      run: chmod +x gradlew
